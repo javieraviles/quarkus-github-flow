@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build the application
+    name: Build native application
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build native compilation with Maven
+    - name: Build native with Maven
       run: mvn -B package -Pnative -Dquarkus.native.container-build=true
     - name: Upload target for next job
       uses: actions/upload-artifact@v1
@@ -42,7 +42,7 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
-    - name: Push to Heroku
+    - name: Build and Push to Heroku Registry
       uses: actions/heroku@master
       with:
         args: container:push web
