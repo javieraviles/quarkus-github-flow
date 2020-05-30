@@ -23,13 +23,14 @@ jobs:
   deploy_to_heroku:
     name: Deploy to Heroku
     runs-on: ubuntu-latest
+    needs: [build]
     steps:
     - uses: actions/checkout@v2
     - name: Build docker image
       env:
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
       run:
-        docker build -t $HEROKU_APP .
+        docker build -f src/main/docker/Dockerfile.jvm -t $HEROKU_APP .
     - name: Login into Heroku
       uses: actions/heroku@master
       with:
