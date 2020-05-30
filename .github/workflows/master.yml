@@ -56,3 +56,14 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP: ${{ secrets.HEROKU_APP }}
+
+  integration_tests:
+    name: Run integration tests
+    runs-on: ubuntu-latest
+    needs: [build, deploy_to_heroku]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: matt-ball/newman-action@master
+      with:
+        collection: integrationtests/quarkus-github-flow.postman_collection.json
+        environment: integrationtests/env/quarkus-github-flow-heroku.postman_environment.json

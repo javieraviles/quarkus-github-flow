@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "4a5ee180-a2f0-4973-8078-e76a6132ab40",
+		"name": "quarkus-github-flow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Example resource works as expected",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "625d8279-05a6-48e8-8856-11ce19d66f77",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body is correct\", function () {\r",
+							"    pm.response.to.have.body(\"hello\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}hello",
+					"host": [
+						"{{baseUrl}}hello"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

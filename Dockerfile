@@ -7,7 +7,7 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/quarkus-github-flow .
+# docker build -t quarkus/quarkus-github-flow .
 #
 # Then run the container using:
 #
