@@ -36,6 +36,8 @@ jobs:
       with:
         java-version: 11
     - name: Verify Sonar with maven
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn verify sonar:sonar
 
   deploy_to_heroku:
