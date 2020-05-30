@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build application
+    name: Build the application
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,8 +17,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build with Maven
-      run: mvn -B package
+    - name: Build native compilation with Maven
+      run: mvn -B package -Pnative -Dquarkus.native.container-build=true
     - name: Upload target for next job
       uses: actions/upload-artifact@v1
       with:
@@ -35,11 +35,6 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: target
-    - name: Build docker image
-      env:
-        HEROKU_APP: ${{ secrets.HEROKU_APP }}
-      run:
-        docker build -f src/main/docker/Dockerfile.jvm -t $HEROKU_APP .
     - name: Login into Heroku
       uses: actions/heroku@master
       with:
