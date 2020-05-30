@@ -17,6 +17,10 @@
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>1.4.2.Final</quarkus.platform.version>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
+    <sonar.projectKey>javieraviles_quarkus-github-flow</sonar.projectKey>
+    <sonar.organization>quarkus-github-flow</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    <sonar.login>214f06333c5b7090128e9144a144da8bc2439ab6</sonar.login>
   </properties>
   <dependencyManagement>
     <dependencies>
