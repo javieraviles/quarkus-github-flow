@@ -10,7 +10,12 @@ class QuickstartUser(HttpUser):
     wait_time = between(1, 2)
 
     @task(1)
-    def get_hello(self):
-        r = self.client.get("/hello")
+    def get_developers(self):
+        r = self.client.get("/developers")
+        assert r.status_code == HTTPStatus.OK, "Unexpected response code: " + str(r.status_code)
+
+    @task(1)
+    def get_developers_search(self):
+        r = self.client.get("/developers/Aviles")
         assert r.status_code == HTTPStatus.OK, "Unexpected response code: " + str(r.status_code)
 

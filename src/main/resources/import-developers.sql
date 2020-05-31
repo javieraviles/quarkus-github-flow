@@ -1,0 +1,2 @@
+INSERT INTO developer (id, name, email) VALUES (nextval('hibernate_sequence'), 'Javier Aviles', 'avileslopez.javier@gmail.com');
+INSERT INTO developer (id, name, email) VALUES (nextval('hibernate_sequence'), 'Ken Thompson', 'ken.thompson@hotmail.com');
