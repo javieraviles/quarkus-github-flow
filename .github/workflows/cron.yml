@@ -18,4 +18,4 @@ jobs:
     - name: Install Locust
       run: python3 -m pip install locust
     - name: Run Load tests
-      run: locust --no-web -c 30 -r 5 --run-time 120s --print-stats -f loadtests/locustfile.py --host=https://quarkus-github-flow.herokuapp.com
+      run: locust --config=loadtests/config/test.conf

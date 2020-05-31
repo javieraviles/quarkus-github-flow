@@ -78,4 +78,4 @@ jobs:
     - uses: matt-ball/newman-action@master
       with:
         collection: integrationtests/quarkus-github-flow.postman_collection.json
-        environment: integrationtests/env/quarkus-github-flow-heroku.postman_environment.json
+        environment: integrationtests/env/quarkus-github-flow-test.postman_environment.json
