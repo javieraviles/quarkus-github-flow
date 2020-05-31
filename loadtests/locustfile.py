@@ -20,8 +20,7 @@ class UserBehavior(TaskSet):
 
     @task(1)
     def get_hello(self):
-        r = self.client.get(
-            "/hello", headers=headers)
+        r = self.client.get("/hello")
         assert r.status_code == HTTPStatus.OK, "Unexpected response code: " + str(r.status_code)
         assert r.elapsed < datetime.timedelta(seconds=0.5), "Request took more than 0.5 second"
 
