@@ -2,7 +2,7 @@ name: Cron CI
 
 on:
   schedule:
-    - cron:  '*/5 * * * *'
+    - cron:  '*/30 * * * *'
 
 jobs:
   load_tests:
