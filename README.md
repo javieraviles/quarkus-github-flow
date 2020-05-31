@@ -9,6 +9,7 @@ This is a **Github Flow** boilerplate project using **Quarkus** GraalVM native i
   - [Integration Tests](#integration-tests)
   - [Sonar](#sonar)
   - [Wrapping up developer responsabilities](#wrapping-up-developer-responsabilities)
+  - [Database](#database)
   - [Api docs](#api-docs)
   - [Quarkus](#quarkus)
     - [Running the application in dev mode](#running-the-application-in-dev-mode)
@@ -78,6 +79,8 @@ Even though the dashboard will always represent the quality status of master, is
 - Make sure integration tests still work. Introduce some if needed.
 - Make sure the technial debt in Sonar is the same or better when your code is merged.
 
+## Database
+Locally, just for development purposes, an H2 database will be used. Once deployed, the application will use a *PostgreSQL* in Heroku. Connection details will get overriden as environment variables replaced in the `Dockerfile` CMD.
 
 ## Api docs
 Both [OpenAPI](https://quarkus-github-flow.herokuapp.com/openapi) and [Swagger-UI](https://quarkus-github-flow.herokuapp.com/swagger-ui) are available.

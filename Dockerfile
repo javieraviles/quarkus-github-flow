@@ -27,4 +27,4 @@ RUN chmod 775 /work /work/application \
 EXPOSE 8080
 USER 1001
 
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Dquarkus.http.port=${PORT}", "-Dquarkus.datasource.url=${JDBC_DATABASE_URL}", "-Dquarkus.datasource.username=${JDBC_DATABASE_USERNAME}", "-Dquarkus.datasource.password=${JDBC_DATABASE_PASSWORD}"]
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Dquarkus.http.port=${PORT}", "-Dquarkus.datasource.url=${JDBC_DATABASE_URL}", "-Dquarkus.datasource.username=${JDBC_DATABASE_USERNAME}", "-Dquarkus.datasource.password=${JDBC_DATABASE_PASSWORD}", "-Dquarkus.datasource.driver=org.postgresql.Driver"]
