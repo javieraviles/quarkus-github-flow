@@ -15,7 +15,7 @@ jobs:
       with:
         java-version: 11
     - name: Build native with Maven
-      run: mvn -B package -Pnative -Dquarkus.native.container-build=true
+      run: mvn -B package -Pnative -Dquarkus.native.container-build=true -Dquarkus.datasource.driver=org.postgresql.Driver
     - name: Upload target for next job
       uses: actions/upload-artifact@v1
       with:
