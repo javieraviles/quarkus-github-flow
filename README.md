@@ -1,12 +1,25 @@
 # quarkus-github-flow project
 
-This is a **Github Flow** boilerplate project using **Quarkus**. The whole CICD process is already setup so the development can just get started.
+This is a **Github Flow** boilerplate project using **Quarkus** GraalVM native image. The whole CICD process deploying to Heroku is already setup so the development can just get started.
+
+  - [CICD Workflows in place](#cicd-workflows-in-place)
+  - [How to Github Flow](#how-to-github-flow)
+  - [Release](#release)
+  - [Load Tests](#load-tests)
+  - [Integration Tests](#integration-tests)
+  - [Sonar](#sonar)
+  - [Wrapping up developer responsabilities](#wrapping-up-developer-responsabilities)
+  - [Api docs](#api-docs)
+  - [Quarkus](#quarkus)
+    - [Running the application in dev mode](#running-the-application-in-dev-mode)
+    - [Packaging and running the application](#packaging-and-running-the-application)
+    - [Creating a native executable](#creating-a-native-executable)
 
 ## CICD Workflows in place
 [Github Actions](https://github.com/features/actions) is the CICD tool for this project. Under the directory `.github/worflows` 4 workflows are defined:
 
-- `cron.yml` -> runs periodically (cron expression). For now, only one stage running locust **load tests** against **TEST** environment will take place.
-- `master.yml` -> full CICD, executed each time code gets merged into **master**. Stages: native image build / sonar quality check / deploy to Heroku / run integration tests.
+- `cron.yml` -> runs periodically (cron expression). For now, two stages running locust **load tests** against **TEST** environment and updating SonarCloud dashboard will take place.
+- `master.yml` -> full CICD, executed each time code gets merged into **master**. Stages: native image build / deploy to Heroku / run integration tests.
 - `pullrequest.yml` -> each time a **PR** is created, runs **unitary tests**
 - `tag.yml` -> whenever a **git tag** (v*) is created, this workflow creates a **release** in Github (https://github.com/javieraviles/quarkus-github-flow/releases)
 
@@ -45,7 +58,7 @@ Thanks to [Newman](https://github.com/postmanlabs/newman) the collection can als
 ## Sonar
 [SonarCloud](https://sonarcloud.io/) is free for opensource projects, so you can register there with your github account and link it to a project. Then you have mainly two options, either SonarCloud takes care of pulling from your project whenever there are changes or PRs, or you push it from your CI (previously setting your properties in the `pom.xml`) performing a `mvn verify sonar:sonar`.
 
-The [Dashboard](https://sonarcloud.io/dashboard?id=javieraviles_quarkus-github-flow) will then get updated with the latest quality check. In this project it gets updated each time new code gets merged into **master**.
+The [Dashboard](https://sonarcloud.io/dashboard?id=javieraviles_quarkus-github-flow) in this project will then get updated with the latest quality status whenever `cron.yml` worflow is executed, using **master** branch.
 
 Therefore, notice the following piece of code in the `pom.xml`:
 
@@ -64,6 +77,10 @@ Even though the dashboard will always represent the quality status of master, is
 - Make sure your branch passes all unit tests and every piece of code you introduced contains its own unit test
 - Make sure integration tests still work. Introduce some if needed.
 - Make sure the technial debt in Sonar is the same or better when your code is merged.
+
+
+## Api docs
+Both [OpenAPI](https://quarkus-github-flow.herokuapp.com/openapi) and [Swagger-UI](https://quarkus-github-flow.herokuapp.com/swagger-ui) are available.
 
 ## Quarkus
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
@@ -94,3 +111,10 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/quarkus-github-flow-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
+
+
+
+## TODO / WHY NATIVE IMAGE
+
+## TODO / HEROKU
+
