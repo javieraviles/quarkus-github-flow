@@ -1,0 +1,21 @@
+name: Cron CI
+
+on:
+  schedule:
+    - cron:  '*/15 * * * *'
+
+jobs:
+  load_tests:
+    name: Run load tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+        architecture: 'x64'
+    - name: Install Locust
+      run: python3 -m pip install locustio
+    - name: Run Load tests
+      run: locust --no-web -c 30 -r 1 --run-time 60s --print-stats -f loadtests/locustfile.py --host=https://quarkus-github-flow.herokuapp.com
