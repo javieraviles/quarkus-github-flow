@@ -12,6 +12,9 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
+/*
+* Database is populated for tests form import-developers.sql
+*/
 @QuarkusTest
 @QuarkusTestResource(H2DatabaseTestResource.class)
 public class DeveloperResourceTest {
