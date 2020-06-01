@@ -80,7 +80,7 @@ Even though the dashboard will always represent the quality status of master, is
 - Make sure the technial debt in Sonar is the same or better when your code is merged.
 
 ## Database
-Locally, just for development purposes, an H2 database will be used. Once deployed, the application will use a *PostgreSQL* in Heroku. Connection details will get overriden as environment variables replaced in the `Dockerfile` CMD.
+For testing purposes an H2 database will be used (notice the %test prefix in `application properties` that only apply to mvn test). Once deployed, the application will use a *PostgreSQL* in Heroku. Connection details will get overriden as environment variables will replace some `application properties` (notice the ${PORT:8080} annotation, this will get a default value of `8080` unless a `PORT` environment variables is set, in which case its value will override the `8080`).
 
 ## Api docs
 Both [OpenAPI](https://quarkus-github-flow.herokuapp.com/openapi) and [Swagger-UI](https://quarkus-github-flow.herokuapp.com/swagger-ui) are available.
@@ -114,10 +114,3 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/quarkus-github-flow-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
-
-
-
-## TODO / WHY NATIVE IMAGE
-
-## TODO / HEROKU
-

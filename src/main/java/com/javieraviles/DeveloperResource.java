@@ -34,8 +34,9 @@ public class DeveloperResource {
 
     @POST
     @Transactional
-    public void createDeveloper(@RequestBody Developer newDeveloper) {
+    public Developer createDeveloper(@RequestBody Developer newDeveloper) {
         Developer.persist(newDeveloper);
+        return newDeveloper;
     }
 
     @DELETE

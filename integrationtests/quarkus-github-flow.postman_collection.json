@@ -1,25 +1,66 @@
 {
 	"info": {
-		"_postman_id": "4a5ee180-a2f0-4973-8078-e76a6132ab40",
+		"_postman_id": "5bcc2efa-836e-46a0-a515-9c28d2a07cb2",
 		"name": "quarkus-github-flow",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Developers endpoint contain expected object",
+			"name": "Create a new developer",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "625d8279-05a6-48e8-8856-11ce19d66f77",
+						"id": "d3ed8cea-2dd9-41b9-8a79-5e8833936f11",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"var devJavi = { id:1, name: \"Javier Aviles\", email: \"avileslopez.javier@gmail.com\" };\r",
+							"var jsonData = pm.response.json();\r",
 							"\r",
-							"pm.test(\"Check if developers array includes Javier Aviles\", function () {\r",
+							"pm.environment.set(\"devId\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Javier Aviles\",\n\t\"email\":\"avileslopez.javier@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}developers",
+					"host": [
+						"{{baseUrl}}developers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Developers endpoint contain new Developer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1119c6f3-02e6-4c26-accc-5466d66d4727",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var devJavi = { id:pm.environment.get(\"devId\"), name: \"Javier Aviles\", email: \"avileslopez.javier@gmail.com\" };\r",
+							"\r",
+							"pm.test(\"Check if developers collection includes Javier Aviles\", function () {\r",
 							"    pm.expect(pm.response.json()).to.be.an('array').that.deep.includes.members([devJavi]);\r",
 							"});"
 						],
@@ -40,20 +81,20 @@
 			"response": []
 		},
 		{
-			"name": "Developers search endpoint works as expected",
+			"name": "Developers search endpoint find new developer",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "a686ca82-1e32-44f6-afe9-1b8f24857ad5",
+						"id": "25af1768-b6ef-4f81-ba5c-8caba48f71d2",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"var devJavi = { id:1, name: \"Javier Aviles\", email: \"avileslopez.javier@gmail.com\" };\r",
+							"var devJavi = { id:pm.environment.get(\"devId\"), name: \"Javier Aviles\", email: \"avileslopez.javier@gmail.com\" };\r",
 							"\r",
-							"pm.test(\"Check if developers array includes Javier Aviles\", function () {\r",
+							"pm.test(\"Check if search can find Javier Aviles\", function () {\r",
 							"    pm.expect(pm.response.json()).to.be.an('array').that.deep.includes.members([devJavi]);\r",
 							"});"
 						],
@@ -78,83 +119,12 @@
 			"response": []
 		},
 		{
-			"name": "Create a new developer",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "e2c27a4d-bcdb-4b53-96c0-e0d6640292c5",
-						"exec": [
-							"pm.test(\"Status code is 204\", function () {\r",
-							"    pm.response.to.have.status(204);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\":\"James Gosling\",\n\t\"email\":\"james.gosling@java.net\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}developers",
-					"host": [
-						"{{baseUrl}}developers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Developers endpoint contain new developer",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "cc57a782-bb5b-4232-be6a-a847f9d37bb3",
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"var devJames = { id:3, name: \"James Gosling\", email: \"james.gosling@java.net\" };\r",
-							"\r",
-							"pm.test(\"Check if developers array includes James Gosling\", function () {\r",
-							"    pm.expect(pm.response.json()).to.be.an('array').that.deep.includes.members([devJames]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}developers",
-					"host": [
-						"{{baseUrl}}developers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Delete developer",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "a16da8ce-b8dd-400b-a9bc-ee29b63bdd50",
+						"id": "f55d548e-d31d-4ecb-b683-3ea1e163638b",
 						"exec": [
 							"pm.test(\"Status code is 204\", function () {\r",
 							"    pm.response.to.have.status(204);\r",
@@ -168,33 +138,33 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}developers/3",
+					"raw": "{{baseUrl}}developers/{{devId}}",
 					"host": [
 						"{{baseUrl}}developers"
 					],
 					"path": [
-						"3"
+						"{{devId}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Developer should not be there anymore",
+			"name": "Developers search endpoint cant find developer anymore",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "6107c6e5-e9e6-43d4-8993-0691c29ed375",
+						"id": "c43cba2a-aefe-438c-a809-2709629a7434",
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"var devJames = { id:3, name: \"James Gosling\", email: \"james.gosling@java.net\" };\r",
+							"var devJavi = { id:pm.environment.get(\"devId\"), name: \"Javier Aviles\", email: \"avileslopez.javier@gmail.com\" };\r",
 							"\r",
-							"pm.test(\"Check if developers array does not include James Gosling anymore\", function () {\r",
-							"    pm.expect(pm.response.json()).to.be.an('array').that.deep.not.includes.members([devJames]);\r",
+							"pm.test(\"Developer Javier Aviles cant be found anymore\", function () {\r",
+							"   pm.expect(pm.response.json()).to.be.an('array').that.deep.not.includes.members([devJavi]);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -205,9 +175,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{baseUrl}}developers",
+					"raw": "{{baseUrl}}developers/search/Avile",
 					"host": [
 						"{{baseUrl}}developers"
+					],
+					"path": [
+						"search",
+						"Avile"
 					]
 				}
 			},
