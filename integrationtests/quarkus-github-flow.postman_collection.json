@@ -27,7 +27,13 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"name\":\"Javier Aviles\",\n\t\"email\":\"avileslopez.javier@gmail.com\"\n}",
