@@ -16,6 +16,6 @@ class QuickstartUser(HttpUser):
 
     @task(1)
     def get_developers_search(self):
-        r = self.client.get("/developers/Aviles")
+        r = self.client.get("/developers/search/james")
         assert r.status_code == HTTPStatus.OK, "Unexpected response code: " + str(r.status_code)
 
