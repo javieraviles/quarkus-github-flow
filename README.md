@@ -9,6 +9,7 @@ This is a **Github Flow** boilerplate project using **Quarkus** GraalVM native i
   - [Integration Tests](#integration-tests)
   - [Sonar](#sonar)
   - [Wrapping up developer responsabilities](#wrapping-up-developer-responsabilities)
+    - [Heroku DEV environment](#heroku-dev-environment)
   - [Database](#database)
   - [Api docs](#api-docs)
   - [Quarkus](#quarkus)
@@ -79,8 +80,19 @@ Even though the dashboard will always represent the quality status of master, is
 - Make sure integration tests still work. Introduce some if needed.
 - Make sure the technial debt in Sonar is the same or better when your code is merged.
 
+### Heroku DEV environment
+As mentioned before, `master.yml` pipeline will deploy to a DEV heroku environment every time new features are merged into master branch using a `push` mechanism.
+
+A so called `Add-on` is already active in Heroku, making a `PostgreSQL` database hosted in AWS available through a connection string provided as `DATABASE_URL` environment variable.
+
+Additionally, a `Dyno` is also created in Heroku so the platform knows how to bootstrap our docker image every time it gets deplyed, configured with the command `web ./application -Dquarkus.http.host\=0.0.0.0`.
+
+Other than that, when the pipeline pushes to Heroku, the application downtime (startup time) will be around **50ms** thanks to the GraalVM native image.
+
 ## Database
 For testing purposes an H2 database will be used (notice the %test prefix in `application properties` that only apply to mvn test). Once deployed, the application will use a *PostgreSQL* in Heroku. Connection details will get overriden as environment variables will replace some `application properties` (notice the ${PORT:8080} annotation, this will get a default value of `8080` unless a `PORT` environment variables is set, in which case its value will override the `8080`).
+
+As version control for database, the selected tool is `flyway`. Schema migrations will take place automatically on application startup when new flyway scripts are created at `src/main/resources/db/migration` following the appropriate annotation.
 
 ## Api docs
 Both [OpenAPI](https://quarkus-github-flow.herokuapp.com/openapi) and [Swagger-UI](https://quarkus-github-flow.herokuapp.com/swagger-ui) are available.
