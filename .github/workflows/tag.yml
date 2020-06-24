@@ -21,7 +21,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: |
             Changes in this Release
-            - First Change
-            - Second Change
+            - Added h2 testing database and postgres CRUD as example
+            - Added flyway for db migrations
+            - Updated docs
           draft: false
           prerelease: false
