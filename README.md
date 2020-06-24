@@ -9,13 +9,15 @@ This is a **Github Flow** boilerplate project using **Quarkus** GraalVM native i
   - [Integration Tests](#integration-tests)
   - [Sonar](#sonar)
   - [Wrapping up developer responsabilities](#wrapping-up-developer-responsabilities)
-    - [Heroku DEV environment](#heroku-dev-environment)
+  - [Heroku DEV environment](#heroku-dev-environment)
   - [Database](#database)
   - [Api docs](#api-docs)
   - [Quarkus](#quarkus)
     - [Running the application in dev mode](#running-the-application-in-dev-mode)
     - [Packaging and running the application](#packaging-and-running-the-application)
     - [Creating a native executable](#creating-a-native-executable)
+  - [Continuous Deployment](#continuous-deployment)
+    - [How to do this?](#how-to-do-this)
 
 ## CICD Workflows in place
 [Github Actions](https://github.com/features/actions) is the CICD tool for this project. Under the directory `.github/worflows` 4 workflows are defined:
@@ -80,7 +82,7 @@ Even though the dashboard will always represent the quality status of master, is
 - Make sure integration tests still work. Introduce some if needed.
 - Make sure the technial debt in Sonar is the same or better when your code is merged.
 
-### Heroku DEV environment
+## Heroku DEV environment
 As mentioned before, `master.yml` pipeline will deploy to a DEV heroku environment every time new features are merged into master branch using a `push` mechanism.
 
 A so called `Add-on` is already active in Heroku, making a `PostgreSQL` database hosted in AWS available through a connection string provided as `DATABASE_URL` environment variable.
@@ -126,3 +128,23 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/quarkus-github-flow-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
+
+## Continuous Deployment
+So the whole project is fine and the DEV environment looks very comfy and so, BUT, what if a real production deployment completely automated is needed, with zero downtime and a serious strategy?
+
+Well, that's the reason why I'm adding this section here.
+
+A very convenient strategy is the so called [BlueGreenDeployment](https://martinfowler.com/bliki/BlueGreenDeployment.html).
+
+For our scenario we will have two exact replicas of the production environment, blue and green (active and inactive). New deployments will be performed over the green (inactive) environment (where the router is not pointing to at the moment), and ensure with our integration and load tests from pipeline that the new deployment is working correctly. Then, the swap can be performed (router points now to green, becoming the active one).
+
+![BlueGreenDeployment](https://raw.githubusercontent.com/javieraviles/quarkus-github-flow/master/assets/blue_green_deployments.png) 
+
+Both rollback and stability should be fine following this pattern.
+
+### How to do this?
+Your PROD environments can be created at Heroku in the same way you did for DEV. Deployment can be automated editing the `tag.yaml` workflow including the same heroku deployment stages `master.yaml` is using but for the prod release. Afterwards, you should include also the postman integration tests and locust load tests to ensure environment stability.
+
+Now the end clients will not call Heroku prod environments directly, but using the **router** url. This router can be implemented using NGINX web server. Both the configuration and the swap script NGINX would use can be found at `bluegreendeployment` directory.
+
+This is a very brief description to just give an insight of how this could be done, but don't hesitate to read further or contact me for more details about this specific approach.
